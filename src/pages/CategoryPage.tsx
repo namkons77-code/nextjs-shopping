@@ -6,6 +6,15 @@ import { ProductCard } from '../components/common/ProductCard';
 
 type SortOption = 'newest' | 'name' | 'price-asc' | 'price-desc' | 'reviews';
 
+const CATEGORY_ALIASES: Record<
+  string,
+  { category: string; tab?: string; label?: string }
+> = {
+  kingcrab: { category: 'crab', tab: '킹크랩', label: '킹크랩' },
+  snowcrab: { category: 'crab', tab: '대게', label: '대게' },
+  lobster: { category: 'crab', tab: '랍스터', label: '랍스터' },
+};
+
 export const CategoryPage: React.FC = () => {
   const { category } = useParams<{ category?: string }>();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -16,22 +25,26 @@ export const CategoryPage: React.FC = () => {
   const tabParam = searchParams.get('tab') || '';
   const [sortBy, setSortBy] = useState<SortOption>('newest');
 
-  const currentCatObj = GNB_CATEGORIES.find((c) => c.id === category);
+  const resolvedAlias = category ? CATEGORY_ALIASES[category] : undefined;
+  const effectiveCategory = resolvedAlias?.category || category;
+  const effectiveTab = tabParam || resolvedAlias?.tab || '';
+
+  const currentCatObj = GNB_CATEGORIES.find((c) => c.id === effectiveCategory);
   const pageTitle = query
     ? `'${query}' 검색 결과`
-    : tabParam
-      ? tabParam
-      : currentCatObj?.label || '전체 상품';
+    : effectiveTab
+      ? effectiveTab
+      : resolvedAlias?.label || currentCatObj?.label || '전체 상품';
 
   const filteredProducts = useMemo(() => {
     let list = [...products];
 
-    if (category && category !== 'all') {
-      list = list.filter((p) => p.category === category);
+    if (effectiveCategory && effectiveCategory !== 'all') {
+      list = list.filter((p) => p.category === effectiveCategory);
     }
 
-    if (tabParam) {
-      list = list.filter((p) => p.pickerTab === tabParam);
+    if (effectiveTab) {
+      list = list.filter((p) => p.pickerTab === effectiveTab);
     }
 
     if (prepParam === '활') {
@@ -70,7 +83,7 @@ export const CategoryPage: React.FC = () => {
     }
 
     return list;
-  }, [products, category, tabParam, prepParam, query, sortBy]);
+  }, [products, effectiveCategory, effectiveTab, prepParam, query, sortBy]);
 
   const setPrepFilter = (prep: string) => {
     const next = new URLSearchParams(searchParams);

@@ -17,7 +17,7 @@ export const ReviewsPage: React.FC = () => {
           구매 후기
         </h1>
         <p className="mt-2 text-[15px] text-[#6e6e73]">
-          크랩마스터을 먼저 받아본 고객님들의 생생한 수율·맛 후기
+          크랩마스터를 먼저 받아본 고객님들의 생생한 수율·맛 후기
         </p>
       </div>
 
