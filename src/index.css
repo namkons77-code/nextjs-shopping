@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+@theme {
+  --color-kk-bg: #ffffff;
+  --color-kk-alt: #f5f5f7;
+  --color-kk-ink: #1d1d1f;
+  --color-kk-ink2: #6e6e73;
+  --color-kk-line: #d2d2d7;
+  --color-cm-teal: #0d5c63;
+  --color-cm-teal-press: #094449;
+  --color-cm-coral: #e05a47;
+  --color-cm-coral-dark: #ff7b69;
+  --color-kk-dark: #000000;
+  --color-kk-dark2: #161617;
+  --color-kk-tile: #0b0b0b;
+  --color-kk-kakao: #fee500;
+  --color-kk-kakao-ink: #3c1e1e;
+  --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    color: #1d1d1f;
+    background-color: #ffffff;
+    scroll-behavior: smooth;
+    word-break: keep-all;
+  }
+
+  body {
+    margin: 0;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@keyframes kk-marquee-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes kk-marquee-right {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.kk-marquee-left {
+  animation: kk-marquee-left 28s linear infinite;
+}
+
+.kk-marquee-right {
+  animation: kk-marquee-right 32s linear infinite;
+}
+
+.kk-marquee-paused {
+  animation-play-state: paused !important;
+}
+
+.kk-stroke-text {
+  -webkit-text-stroke: 2px rgba(255, 255, 255, 0.78);
+  color: transparent;
+}
+
+/* Custom scrollbar hiding for horizontal product & review rails */
+.kk-no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.kk-no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Mask for dark BEST product tiles */
+.kk-tile-mask {
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.65) 20%, #000 45%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.65) 20%, #000 45%);
+}
