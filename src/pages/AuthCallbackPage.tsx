@@ -91,7 +91,7 @@ export const AuthCallbackPage: React.FC = () => {
             await finishLogin(retry.data.session.user.id);
           } else {
             setErrorMsg(
-              '로그인 세션을 확인하지 못했습니다. 시작했던 주소(localhost:5175)와 동일한 브라우저에서 다시 시도해 주세요.'
+              `로그인 세션을 확인하지 못했습니다. 시작했던 주소(${window.location.origin})와 동일한 브라우저에서 다시 시도해 주세요.`
             );
           }
         }, 3000);
